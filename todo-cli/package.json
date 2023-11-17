@@ -1,7 +1,10 @@
 {
   "devDependencies": {
+    "eslint": "^8.53.0",
     "husky": "^8.0.3",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "lint-staged": "^15.1.0",
+    "prettier": "^3.1.0"
   },
   "name": "todo-cli",
   "version": "1.0.0",
@@ -198,6 +201,12 @@
   "scripts": {
     "test": "jest",
     "prepare": "cd..&& husky install todo-cli/.husky"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "prettier --write ."
+    ]
   },
   "author": "Vedant Pandey <vedantp.js@gmail.com>",
   "license": "ISC",
