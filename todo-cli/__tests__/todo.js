@@ -20,12 +20,12 @@ describe("Todolist Test Suite", () => {
       title: "Test - 1",
       completed: false,
       dueDate: yesterday,
-    }),
-      myTodoList.add({
-        title: "Test - 2",
-        completed: false,
-        dueDate: tomorrow,
-      });
+    });
+    myTodoList.add({
+      title: "Test - 2",
+      completed: false,
+      dueDate: tomorrow,
+    });
   });
   test("Should add a todo item", () => {
     const todoItemsCount = myTodoList.all.length;
