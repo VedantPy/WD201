@@ -2,23 +2,37 @@
 const { beforeAll } = require("jest-circus");
 const todoList = require("../todo");
 
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString("en-CA");
+};
+
+let dateToday = new Date();
+let today = formatDate(dateToday);
+let tomorrow = formatDate(dateToday.setDate(dateToday.getDate() + 1));
+let yesterday = formatDate(dateToday.setDate(dateToday.getDate() - 1));
+
 // Create an instance of todoList
 const myTodoList = todoList();
 
 describe("Todolist Test Suite", () => {
   beforeAll(() => {
     myTodoList.add({
-      title: "Test",
+      title: "Test - 1",
       completed: false,
-      dueDate: new Date().toLocaleDateString("en-CA"),
-    });
+      dueDate: yesterday,
+    }),
+      myTodoList.add({
+        title: "Test - 2",
+        completed: false,
+        dueDate: tomorrow,
+      });
   });
   test("Should add a todo item", () => {
     const todoItemsCount = myTodoList.all.length;
     myTodoList.add({
       title: "Test",
       completed: false,
-      dueDate: new Date().toLocaleDateString("en-CA"),
+      dueDate: today,
     });
     expect(myTodoList.all.length).toBe(todoItemsCount + 1);
   });
@@ -29,12 +43,15 @@ describe("Todolist Test Suite", () => {
     expect(myTodoList.all[0].completed).toBe(true);
   });
   test("Should return a list of overdue todo items", () => {
-    expect(myTodoList.overdue().length).toBe(0);
+    const todolist = myTodoList.overdue();
+    expect(todolist.every((todo) => todo.dueDate < today)).toBe(true);
   });
   test("Should return a list of todo items due today", () => {
-    expect(myTodoList.dueToday().length).toBe(1);
+    const todolist = myTodoList.dueToday();
+    expect(todolist.every((todo) => todo.dueDate === today)).toBe(true);
   });
   test("Should return a list of todo items due later", () => {
-    expect(myTodoList.dueLater().length).toBe(0);
+    const todolist = myTodoList.dueLater();
+    expect(todolist.every((todo) => todo.dueDate > today)).toBe(true);
   });
 });
