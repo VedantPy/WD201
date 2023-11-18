@@ -30,7 +30,7 @@ describe("Todolist Test Suite", () => {
   test("Should add a todo item", () => {
     const todoItemsCount = myTodoList.all.length;
     myTodoList.add({
-      title: "Test",
+      title: "Test-3",
       completed: false,
       dueDate: today,
     });
@@ -44,7 +44,7 @@ describe("Todolist Test Suite", () => {
   });
   test("Should return a list of overdue todo items", () => {
     const todolist = myTodoList.overdue();
-    expect(todolist.every((todo) => todo.dueDate < today)).toBe(true);
+    expect(todolist.every((todo) => todo.dueDate === yesterday)).toBe(true);
   });
   test("Should return a list of todo items due today", () => {
     const todolist = myTodoList.dueToday();
@@ -52,6 +52,6 @@ describe("Todolist Test Suite", () => {
   });
   test("Should return a list of todo items due later", () => {
     const todolist = myTodoList.dueLater();
-    expect(todolist.every((todo) => todo.dueDate > today)).toBe(true);
+    expect(todolist.every((todo) => todo.dueDate === tomorrow)).toBe(true);
   });
 });
