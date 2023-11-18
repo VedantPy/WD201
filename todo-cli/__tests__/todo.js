@@ -43,27 +43,30 @@ describe("Todolist Test Suit", () => {
     expect(all[0].completed).toBe(true);
   });
   test(" Should return a list of overdue todo items", () => {
-    const todolist = overdue();
-    expect(
-      todolist.every((todo) => {
-        return todo.dueDate < today;
-      }),
-    ).toBe(true);
+    const overDueTodoItemsCount = overdue().length;
+    add({
+      title: "todo - 4",
+      completed: false,
+      dueDate: yesterday,
+    });
+    expect(overdue().length).toEqual(overDueTodoItemsCount + 1);
   });
   test(" Should return a list of todo items due today", () => {
-    const todolist = dueToday();
-    expect(
-      todolist.every((todo) => {
-        return todo.dueDate === today;
-      }),
-    ).toBe(true);
+    const dueTodayTodoItemsCount = dueToday().length;
+    add({
+      title: "todo - 5",
+      completed: false,
+      dueDate: today,
+    });
+    expect(dueToday().length).toEqual(dueTodayTodoItemsCount + 1);
   });
   test("Should return a list of todo items due later", () => {
-    const todolist = dueLater();
-    expect(
-      todolist.every((todo) => {
-        return todo.dueDate > today;
-      }),
-    ).toBe(true);
+    const dueLaterTodoItemsCount = dueLater().length;
+    add({
+      title: "todo - 6",
+      completed: false,
+      dueDate: tomorrow,
+    });
+    expect(dueLater().length).toEqual(dueLaterTodoItemsCount + 1);
   });
 });
